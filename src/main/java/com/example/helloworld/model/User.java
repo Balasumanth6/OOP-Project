@@ -7,7 +7,17 @@ import java.util.Collection;
 @Entity
 @Table(name = "users")
 public class User {
-    
+
+    public User() {}
+
+    public User(String firstName, String lastName, String password, String email, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,16 +35,19 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
     
-    @ManyToMany
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"
-            )
-    )
-    private Collection<Role> roles;
+    @Column(name = "role")
+    private String role;
+    
+//    @ManyToMany
+//    @JoinTable(
+//            name = "users_roles",
+//            joinColumns = @JoinColumn(
+//                    name = "user_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "role_id", referencedColumnName = "id"
+//            )
+//    )
+//    private Collection<Role> roles;
 
     public Long getId() {
         return id;
@@ -73,4 +86,12 @@ public class User {
     }
 
     public void setEmail(String email) { this.email = email; }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

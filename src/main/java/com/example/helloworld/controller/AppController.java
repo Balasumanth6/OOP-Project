@@ -1,5 +1,6 @@
 package com.example.helloworld.controller;
 
+import com.example.helloworld.common.Constants;
 import com.example.helloworld.model.User;
 import com.example.helloworld.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class AppController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        user.setRole(Constants.MEMBER_STUDENT);
         userRepository.save(user);
 
         return "loginAndSignUp/register_success";
