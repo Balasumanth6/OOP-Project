@@ -1,16 +1,18 @@
 package com.example.helloworld.controller;
 
 import com.example.helloworld.common.Constants;
+import com.example.helloworld.model.CustomUserDetails;
 import com.example.helloworld.model.User;
 import com.example.helloworld.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class AppController {
@@ -39,10 +41,15 @@ public class AppController {
         return "loginAndSignUp/register_success";
     }
     
-    @GetMapping("/users")
-    public String ListUsers(Model model) {
-        List<User> listUsers = userRepository.findAll();
-        model.addAttribute("listUsers", listUsers);
-        return "/users";
+    @GetMapping("/admin")
+    public String AdminView() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String role = ((CustomUserDetails)principal).getRole();
+        if (Objects.equals(role, Constants.ROLE_ADMIN)) {
+            return "/admin/home";
+        }
+        else {
+            return "accessDenied";
+        }
     }
 }

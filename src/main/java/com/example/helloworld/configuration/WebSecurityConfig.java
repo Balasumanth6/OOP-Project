@@ -1,5 +1,6 @@
 package com.example.helloworld.configuration;
 
+import com.example.helloworld.common.Constants;
 import com.example.helloworld.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,10 +44,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/users").authenticated()
-                .anyRequest().permitAll()
+                .antMatchers("/").authenticated().anyRequest().permitAll()
                 .and()
-                .formLogin().usernameParameter("email").defaultSuccessUrl("/users").permitAll()
+                .formLogin().usernameParameter("email").defaultSuccessUrl("/home").permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();
     }
