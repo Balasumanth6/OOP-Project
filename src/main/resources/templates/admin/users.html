@@ -10,12 +10,6 @@
     <body>
         <div class="container text-center">
             <div>
-                <form th:action="@{/logout}" method="post">
-                    <p>Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b></p>
-                    <input type="submit" value="Sign Out" />
-                </form>
-            </div>
-            <div>
                 <h1>List of Users</h1>
             </div>
             <div>
@@ -27,6 +21,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Role</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,10 +31,12 @@
                         <td th:text="${user.firstName}">First Name</td>
                         <td th:text="${user.lastName}">Last Name</td>
                         <td th:text="${user.role}">Role</td>
+                        <td><a th:href="@{'/deleteUser/' + ${user.id}}">delete user</a></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+            <div><button class="btn btn-primary"><a th:href="@{/admin}">Back</a></button></div>
         </div>
     </body>
 </html>

@@ -5,6 +5,8 @@
     <title>Admin Home</title>
 </head>
 <body>
+    <h2><p>Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b></p></h2>
     <h3><a th:href="@{/users}">List Users</a></h3>
+    <div><button class="btn btn-primary"><a th:href="@{/home}">Back</a></button></div>
 </body>
 </html>
