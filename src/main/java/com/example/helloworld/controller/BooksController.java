@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,6 +39,7 @@ public class BooksController {
         model.addAttribute("book", new Book());
         return "/books/form";
     }
+    
     @PostMapping("/book_register")
     public String bookRegister(Book book) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -46,6 +49,8 @@ public class BooksController {
         book.setUserName(userName);
         book.setAvailableStatus(Constants.BOOK_STATUS_AVAILABLE);
         book.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
+        book.setCreatedDate(LocalDateTime.now());
+        book.setDueDate(null);
         bookRepository.save(book);
         return "/books/addSuccessful";
     }
@@ -119,6 +124,7 @@ public class BooksController {
         bookToAcceptRequest.setRequestedByUserName(null);
         bookToAcceptRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
         bookToAcceptRequest.setAvailableStatus(Constants.BOOK_STATUS_ISSUED);
+        bookToAcceptRequest.setDueDate(LocalDateTime.now());
         bookRepository.save(bookToAcceptRequest);
         return "/home";
     }
@@ -129,6 +135,7 @@ public class BooksController {
         bookToBeReturned.setIssuedToUserId(null);
         bookToBeReturned.setIssuedToUserName(null);
         bookToBeReturned.setAvailableStatus(Constants.BOOK_STATUS_AVAILABLE);
+        bookToBeReturned.setDueDate(null);
         bookRepository.save(bookToBeReturned);
         return "/home";
     }

@@ -29,6 +29,8 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
             user.setEmail("admin@gmail.com");
             user.setPassword(passwordEncoder.encode("admin123"));
             user.setRole(Constants.ROLE_ADMIN);
+            user.setAddress("Bits Hyderabad");
+            user.setPhoneNumber("9381578257");
             userRepository.save(user);
         }
         else {

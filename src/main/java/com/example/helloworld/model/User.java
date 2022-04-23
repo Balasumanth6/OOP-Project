@@ -1,8 +1,6 @@
 package com.example.helloworld.model;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "users")
@@ -37,6 +35,29 @@ public class User {
     
     @Column(name = "role")
     private String role;
+    
+    @Column(name = "phoneNumber")
+    private String phoneNumber;
+    
+    @Column(name = "address")
+    private String address;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public Long getId() {
         return id;
     }

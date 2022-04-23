@@ -2,6 +2,8 @@ package com.example.helloworld.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "books")
@@ -41,6 +43,27 @@ public class Book implements Serializable {
     @Column(nullable = true, name = "requestedByUserName")
     private String requestedByUserName;
 
+    @Column(nullable = false, name = "createdDate")
+    private LocalDateTime createdDate;
+    
+    @Column(nullable = true, name = "dueDate")
+    private LocalDateTime dueDate;
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
+    }
 
     public boolean isAvailableStatus() {
         return availableStatus;
