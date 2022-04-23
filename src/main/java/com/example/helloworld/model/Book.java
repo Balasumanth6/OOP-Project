@@ -17,8 +17,79 @@ public class Book implements Serializable {
     @Column(nullable = false, name = "author")
     private String author;
     
-    @Column(nullable = false, name = "status")
-    private Integer status;
+    @Column(nullable = false, name = "issuedStatus")
+    private boolean availableStatus;
+    
+    @Column(nullable = false, name = "pendingStatus")
+    private boolean pendingStatus;
+
+    @Column(nullable = false, name = "userId")
+    private Long userId;
+
+    @Column(nullable = false, name = "userName")
+    private String userName;
+    
+    @Column(nullable = true, name = "issuedToUserId")
+    private Long issuedToUserId;
+    
+    @Column(nullable = true, name = "issuedToUserName")
+    private String issuedToUserName;
+    
+    @Column(nullable = true, name = "requestedByUserId")
+    private Long requestedByUserId;
+    
+    @Column(nullable = true, name = "requestedByUserName")
+    private String requestedByUserName;
+
+
+    public boolean isAvailableStatus() {
+        return availableStatus;
+    }
+    public void setAvailableStatus(boolean availableStatus) {
+        this.availableStatus = availableStatus;
+    }
+    public boolean isPendingStatus() {
+        return pendingStatus;
+    }
+    public void setPendingStatus(boolean pendingStatus) {
+        this.pendingStatus = pendingStatus;
+    }
+    public String getIssuedToUserName() {
+        return issuedToUserName;
+    }
+    public void setIssuedToUserName(String issuedToUserName) {
+        this.issuedToUserName = issuedToUserName;
+    }
+    public Long getRequestedByUserId() {
+        return requestedByUserId;
+    }
+    public void setRequestedByUserId(Long requestedByUserId) {
+        this.requestedByUserId = requestedByUserId;
+    }
+    public String getRequestedByUserName() {
+        return requestedByUserName;
+    }
+    public void setRequestedByUserName(String requestedByUserName) {
+        this.requestedByUserName = requestedByUserName;
+    }
+    public Long getIssuedToUserId() {
+        return issuedToUserId;
+    }
+    public void setIssuedToUserId(Long issuedToUserId) {
+        this.issuedToUserId = issuedToUserId;
+    }
+    public String getUserName() {
+        return userName;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    public Long getUserId() {
+        return userId;
+    }
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Long getId() {
         return id;
@@ -42,13 +113,5 @@ public class Book implements Serializable {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 }

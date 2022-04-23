@@ -17,11 +17,5 @@ public class BookService {
     
     public List<Book> getAll() { return bookRepository.findAll(); }
     public Book getByTag(Long id) { return bookRepository.findById(id).get(); }
-    
-    public Book addNew(Book book) {
-        book.setStatus(Constants.BOOK_STATUS_AVAILABLE);
-        return bookRepository.save(book);
-    }
-    
     public Book save(Book book) { return bookRepository.save(book); }
 }

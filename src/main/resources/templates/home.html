@@ -9,7 +9,7 @@
     <div class="container text-center">
         <h2><p>Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b></p></h2>
         <h2>In Home Page</h2>
-        <h3><a th:href="@{/admin}">Admin Privileges</a></h3>
+        <h3><a th:href="@{/admin}" th:if="${#request.userPrincipal.principal.role} == 'Admin'">Admin Privileges</a></h3>
         <h3><a th:href="@{/books/addBook}">Add Books</a></h3>
         <h3><a th:href="@{/books/listBooks}">List Books</a></h3>
     </div>

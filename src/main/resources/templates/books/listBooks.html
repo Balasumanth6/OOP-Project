@@ -13,6 +13,9 @@
                     <th>Book ID</th>
                     <th>Book Name</th>
                     <th>Book Author</th>
+                    <th>Added By</th>
+                    <th>Status</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -20,7 +23,14 @@
                         <td th:text="${book.id}">Book ID</td>
                         <td th:text="${book.title}">Book Name</td>
                         <td th:text="${book.author}">Book Author</td>
-                        <td><a th:href="@{'/books/deleteBook/' + ${book.id}}">delete book</a></td>
+                        <td th:text="${book.userName}">Added By</td>
+                        <td th:if="${book.pendingStatus} and (${book.userId} != ${currentUserId})"><form th:action="@{'/books/cancelRequest/' + ${book.id}}" method="post"><input type="submit" value="Cancel Request" /></form></td>
+                        <td th:if="${!book.pendingStatus} and (${book.userId} != ${currentUserId}) and ${book.availableStatus}"><form th:action="@{'/books/borrowRequest/' + ${book.id}}" method="post"><input type="submit" value="Borrow" /></form></td>
+                        <td th:if="${book.pendingStatus} and (${book.userId} == ${currentUserId})" th:text="'Requested By: ' + ${book.requestedByUserName}"></td>
+                        <td th:if="${book.pendingStatus} and (${book.userId} == ${currentUserId})"><form th:action="@{'/books/acceptBorrowRequest/' + ${book.id}}" method="post"><input type="submit" value="Accept" /></form></td>
+                        <td th:if="${book.pendingStatus} and (${book.userId} == ${currentUserId})"><form th:action="@{'/books/declineBorrowRequest/' + ${book.id}}" method="post"><input type="submit" value="Decline" /></form></td>
+                        <td th:if="${book.userId} == ${currentUserId} and ${book.availableStatus}"><form th:action="@{'/books/deleteBook/' + ${book.id}}"><input type="submit" value="Delete Book" /></form></td>
+                        <td th:if="${!book.availableStatus} and (${book.issuedToUserId} == ${currentUserId})"><form th:action="@{'/books/returnBook/' + ${book.id}}" method="post"><input type="submit" value="Return Book"/></form></td>
                     </tr>
                 </tbody>
             </table>
