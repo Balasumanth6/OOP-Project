@@ -9,6 +9,8 @@ public class CustomUserDetails implements UserDetails {
     private User user;
     public CustomUserDetails(User user) { this.user = user; }
     
+    public String getEmail() { return user.getEmail(); }
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { return  null; }
     

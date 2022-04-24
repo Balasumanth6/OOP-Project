@@ -11,4 +11,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.email = ?1")
     public User findByEmail(String email);
+    
+    @Query("SELECT u FROM User u WHERE u.password = ?1")
+    public User findById(String id);
 }

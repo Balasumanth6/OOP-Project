@@ -11,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class AppController {
@@ -53,8 +55,25 @@ public class AppController {
         }
     }
     
-//    @PostMapping("/changePassword")
-//    public String chnagePassword() {
-//        
-//    }
+    @GetMapping("/changePasswordPage")
+    public String changePasswordPage() {
+        return "/loginAndSignUp/changePasswordPage";
+    }
+    
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam(value = "oldPassword", required = true) String oldPassword, @RequestParam(value = "newPassword", required = true) String newPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String oldEncodedPassword = passwordEncoder.encode(oldPassword);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = ((CustomUserDetails)principal).getEmail();
+        if (passwordEncoder.matches(oldPassword, oldEncodedPassword)) {
+            User user = userRepository.findByEmail(email);
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            return "/loginAndSignUp/passwordChangedSuccessfully";
+        }
+        else {
+            return "/accessDenied";
+        }
+    }
 }
