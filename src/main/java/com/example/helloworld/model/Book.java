@@ -44,24 +44,57 @@ public class Book implements Serializable {
     private String requestedByUserName;
 
     @Column(nullable = false, name = "createdDate")
-    private LocalDateTime createdDate;
+    private Date createdDate;
     
     @Column(nullable = true, name = "dueDate")
-    private LocalDateTime dueDate;
+    private Date dueDate;
+    
+    @Column(nullable = true, name = "issuedDate")
+    private Date issuedDate;
+    
+    @Column(nullable = false, name = "extensionRequest")
+    private boolean extensionRequest;
+    
+    @Column(nullable = false, name = "LoanAccepted")
+    private boolean loanAccepted;
 
-    public LocalDateTime getCreatedDate() {
+    public boolean isLoanAccepted() {
+        return loanAccepted;
+    }
+
+    public void setLoanAccepted(boolean loanAccepted) {
+        this.loanAccepted = loanAccepted;
+    }
+
+    public boolean isExtensionRequest() {
+        return extensionRequest;
+    }
+
+    public void setExtensionRequest(boolean extensionRequest) {
+        this.extensionRequest = extensionRequest;
+    }
+
+    public Date getIssuedDate() {
+        return issuedDate;
+    }
+
+    public void setIssuedDate(Date issuedDate) {
+        this.issuedDate = issuedDate;
+    }
+
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
-    public LocalDateTime getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
-
-    public void setDueDate(LocalDateTime dueDate) {
+    
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 

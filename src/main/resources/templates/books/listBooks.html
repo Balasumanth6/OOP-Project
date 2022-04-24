@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>List Books</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container text-center">
@@ -30,6 +33,11 @@
                         <td th:if="${book.pendingStatus} and (${book.userId} == ${currentUserId})"><form th:action="@{'/books/acceptBorrowRequest/' + ${book.id}}" method="post"><input type="submit" value="Accept" /></form></td>
                         <td th:if="${book.pendingStatus} and (${book.userId} == ${currentUserId})"><form th:action="@{'/books/declineBorrowRequest/' + ${book.id}}" method="post"><input type="submit" value="Decline" /></form></td>
                         <td th:if="${book.userId} == ${currentUserId} and ${book.availableStatus}"><form th:action="@{'/books/deleteBook/' + ${book.id}}"><input type="submit" value="Delete Book" /></form></td>
+                        <td th:if="${!book.availableStatus} and (${book.issuedToUserId} == ${currentUserId})" th:text="'Due Date: ' + ${#dates.format(book.dueDate, 'dd-MMM-yyyy')}"></td>
+                        <td th:if="${!book.availableStatus} and (${book.userId} == ${currentUserId}) and ${book.extensionRequest} and ${!book.loanAccepted}" th:text="'Loan Extension Req by: ' + ${book.issuedToUserName}"></td>
+                        <td th:if="${!book.availableStatus} and (${book.userId} == ${currentUserId}) and ${book.extensionRequest} and ${!book.loanAccepted}"><form th:action="@{'/books/acceptLoanRequest/' + ${book.id}}" method="post"><input type="submit" value="Accept" /></form></td>
+                        <td th:if="${!book.availableStatus} and (${book.userId} == ${currentUserId}) and ${book.extensionRequest} and ${!book.loanAccepted}"><form th:action="@{'/books/declineLoanRequest/' + ${book.id}}" method="post"><input type="submit" value="Decline"/></form></td>
+                        <td th:if="${!book.availableStatus} and (${book.issuedToUserId} == ${currentUserId}) and ${!book.extensionRequest}"><form th:action="@{'/books/extendLoanRequest/' + ${book.id}}" method="post"><input type="submit" value="Extend Loan" /></form></td>
                         <td th:if="${!book.availableStatus} and (${book.issuedToUserId} == ${currentUserId})"><form th:action="@{'/books/returnBook/' + ${book.id}}" method="post"><input type="submit" value="Return Book"/></form></td>
                     </tr>
                 </tbody>
@@ -37,5 +45,6 @@
         </div>
         <div><a th:href="@{/home}">Back</a></div>
     </div>
+    <script th:src="@{/custom/js/book/list.js}"></script>
 </body>
 </html>

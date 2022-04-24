@@ -49,8 +49,9 @@ public class BooksController {
         book.setUserName(userName);
         book.setAvailableStatus(Constants.BOOK_STATUS_AVAILABLE);
         book.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
-        book.setCreatedDate(LocalDateTime.now());
-        book.setDueDate(null);
+        book.setCreatedDate(new Date());
+        book.setLoanAccepted(false);
+        book.setExtensionRequest(false);
         bookRepository.save(book);
         return "/books/addSuccessful";
     }
@@ -96,7 +97,6 @@ public class BooksController {
     
     @PostMapping("/cancelRequest/{id}")
     public String cancelRequest(@PathVariable(name = "id") Long id, Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Book bookToCancelRequest = bookRepository.getById(id);
         bookToCancelRequest.setRequestedByUserId(null);
         bookToCancelRequest.setRequestedByUserName(null);
@@ -124,7 +124,8 @@ public class BooksController {
         bookToAcceptRequest.setRequestedByUserName(null);
         bookToAcceptRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
         bookToAcceptRequest.setAvailableStatus(Constants.BOOK_STATUS_ISSUED);
-        bookToAcceptRequest.setDueDate(LocalDateTime.now());
+        bookToAcceptRequest.setDueDate(new Date(bookToAcceptRequest.getDueDate().getTime() + 14*24*60*60*1000));
+        bookToAcceptRequest.setIssuedDate(new Date());
         bookRepository.save(bookToAcceptRequest);
         return "/home";
     }
@@ -136,7 +137,34 @@ public class BooksController {
         bookToBeReturned.setIssuedToUserName(null);
         bookToBeReturned.setAvailableStatus(Constants.BOOK_STATUS_AVAILABLE);
         bookToBeReturned.setDueDate(null);
+        bookToBeReturned.setIssuedDate(null);
+        bookToBeReturned.setExtensionRequest(false);
         bookRepository.save(bookToBeReturned);
+        return "/home";
+    }
+
+    @PostMapping("extendLoanRequest/{id}")
+    public String extendLoad(@PathVariable(name = "id") Long id) {
+        Book book = bookRepository.getById(id);
+        book.setExtensionRequest(true);
+        bookRepository.save(book);
+        return "/home";
+    }
+    
+    @PostMapping("/acceptLoanRequest/{id}")
+    public String acceptLoanRequest(@PathVariable(name = "id") Long id) {
+        Book book = bookRepository.getById(id);
+        book.setDueDate(new Date(new Date().getTime()+15*24*60*60*1000));
+        book.setLoanAccepted(true);
+        bookRepository.save(book);
+        return "/home";
+    }
+    
+    @PostMapping("/declineLoanRequest/{id}")
+    public String declineLoanRequest(@PathVariable(name = "id") Long id) {
+        Book book = bookRepository.getById(id);
+        book.setExtensionRequest(false);
+        bookRepository.save(book);
         return "/home";
     }
 }
