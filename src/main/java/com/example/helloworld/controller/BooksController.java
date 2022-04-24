@@ -34,10 +34,9 @@ public class BooksController {
     @Autowired
     private UserRepository userRepository;
     
-    @GetMapping("/addBook")
-    public String showBookForm(Model model) {
-        model.addAttribute("book", new Book());
-        return "/books/form";
+    @GetMapping("/firstPage")
+    public String firstPage() {
+        return "/";
     }
     
     @PostMapping("/book_register")
@@ -54,16 +53,6 @@ public class BooksController {
         book.setExtensionRequest(false);
         bookRepository.save(book);
         return "/books/addSuccessful";
-    }
-    
-    @GetMapping("/listBooks")
-    public String showBooksPage(Model model) {
-        List<Book> AllBooks = bookService.getAll();
-        model.addAttribute("AllBooks", AllBooks);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long currentUserId = ((CustomUserDetails)principal).getId();
-        model.addAttribute("currentUserId", currentUserId);
-        return "/books/listBooks";
     }
     
     @GetMapping("/deleteBook/{id}")

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Account</title>
+</head>
+<body>
+    <div class="container text-center">
+            <div><h1>Are you sure to delete your account?</h1></div>
+            <form th:action="@{/deleteAccount}">
+                <div><button type="submit" class="btn btn-primary">Delete</button></div>
+            </form>
+            <form th:action="@{/deleteAccountCancelRequest}">
+                <div><button type="submit" class="btn btn-primary">Cancel</button></div>
+            </form>
+    </div>
+</body>
+</html>

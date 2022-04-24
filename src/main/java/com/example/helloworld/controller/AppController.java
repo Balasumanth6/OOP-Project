@@ -21,11 +21,11 @@ public class AppController {
     @Autowired
     private UserRepository userRepository;
     
-    @GetMapping("")
+    @GetMapping(value =  {"", "/firstPage"})
     public String viewHomePage() {
         return "index";
     }
-
+    
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
@@ -53,11 +53,6 @@ public class AppController {
         else {
             return "accessDenied";
         }
-    }
-    
-    @GetMapping("/changePasswordPage")
-    public String changePasswordPage() {
-        return "/loginAndSignUp/changePasswordPage";
     }
     
     @PostMapping("/changePassword")
