@@ -124,7 +124,7 @@ public class BooksController {
         bookToAcceptRequest.setRequestedByUserName(null);
         bookToAcceptRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
         bookToAcceptRequest.setAvailableStatus(Constants.BOOK_STATUS_ISSUED);
-        bookToAcceptRequest.setDueDate(new Date(bookToAcceptRequest.getDueDate().getTime() + 14*24*60*60*1000));
+        bookToAcceptRequest.setDueDate(new Date(new Date().getTime() + 14*24*60*60*1000));
         bookToAcceptRequest.setIssuedDate(new Date());
         bookRepository.save(bookToAcceptRequest);
         return "/home";
@@ -154,7 +154,7 @@ public class BooksController {
     @PostMapping("/acceptLoanRequest/{id}")
     public String acceptLoanRequest(@PathVariable(name = "id") Long id) {
         Book book = bookRepository.getById(id);
-        book.setDueDate(new Date(new Date().getTime()+15*24*60*60*1000));
+        book.setDueDate(new Date(book.getDueDate().getTime()+15*24*60*60*1000));
         book.setLoanAccepted(true);
         bookRepository.save(book);
         return "/home";

@@ -23,9 +23,6 @@ public class AppController {
     public String viewHomePage() {
         return "index";
     }
-    
-//    @GetMapping("/home")
-//    public String viewPage() { return "/home"; }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -55,4 +52,9 @@ public class AppController {
             return "accessDenied";
         }
     }
+    
+//    @PostMapping("/changePassword")
+//    public String chnagePassword() {
+//        
+//    }
 }

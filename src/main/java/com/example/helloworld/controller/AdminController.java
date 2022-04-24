@@ -23,7 +23,7 @@ public class AdminController {
         return "/admin/users";
     }
     
-    @GetMapping("deleteUser/{id}")
+    @GetMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable(name = "id") Long id, Model model) {
         userRepository.deleteById(id);
         return "/admin/home";
