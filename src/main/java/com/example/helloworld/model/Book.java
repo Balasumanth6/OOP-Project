@@ -57,6 +57,17 @@ public class Book implements Serializable {
     
     @Column(nullable = false, name = "LoanAccepted")
     private boolean loanAccepted;
+    
+    @Column(nullable = false, name = "usedLoanRequest")
+    private boolean usedLoanRequest;
+
+    public boolean isUsedLoanRequest() {
+        return usedLoanRequest;
+    }
+
+    public void setUsedLoanRequest(boolean usedLoanRequest) {
+        this.usedLoanRequest = usedLoanRequest;
+    }
 
     public boolean isLoanAccepted() {
         return loanAccepted;

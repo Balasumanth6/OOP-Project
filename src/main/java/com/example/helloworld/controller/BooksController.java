@@ -51,6 +51,7 @@ public class BooksController {
         book.setCreatedDate(new Date());
         book.setLoanAccepted(false);
         book.setExtensionRequest(false);
+        book.setUsedLoanRequest(false);
         bookRepository.save(book);
         return "/books/addSuccessful";
     }
@@ -128,6 +129,7 @@ public class BooksController {
         bookToBeReturned.setDueDate(null);
         bookToBeReturned.setIssuedDate(null);
         bookToBeReturned.setExtensionRequest(false);
+        bookToBeReturned.setUsedLoanRequest(false);
         bookRepository.save(bookToBeReturned);
         return "/home";
     }
@@ -145,6 +147,7 @@ public class BooksController {
         Book book = bookRepository.getById(id);
         book.setDueDate(new Date(book.getDueDate().getTime()+15*24*60*60*1000));
         book.setLoanAccepted(true);
+        book.setUsedLoanRequest(true);
         bookRepository.save(book);
         return "/home";
     }

@@ -55,4 +55,24 @@ public class HomeController {
     public String deleteAccount() {
         return "/DeleteAccount/deleteAccountPage";
     }
+    
+    @GetMapping("/checkoutPage") 
+    public String checkedOutPage(Model model) {
+        List<Book> AllBooks = bookService.getAll();
+        model.addAttribute("AllBooks", AllBooks);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long currentUserId = ((CustomUserDetails)principal).getId();
+        model.addAttribute("currentUserId", currentUserId);
+        return "/books/checkoutPage";
+    }
+    
+    @GetMapping("/myBooksPage")
+    public String myBooksPage(Model model) {
+        List<Book> AllBooks = bookService.getAll();
+        model.addAttribute("AllBooks", AllBooks);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long currentUserId = ((CustomUserDetails)principal).getId();
+        model.addAttribute("currentUserId", currentUserId);
+        return "/books/myBooksPage";
+    }
 }

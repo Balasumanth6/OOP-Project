@@ -12,6 +12,8 @@
         <h3><a th:href="@{/admin}" th:if="${#request.userPrincipal.principal.role} == 'Admin'">Admin Privileges</a></h3>
         <h3><a th:href="@{/addBook}">Add Books</a></h3>
         <h3><a th:href="@{/listBooks}">List Books</a></h3>
+        <h3><a th:href="@{/checkoutPage}">Checked Out</a></h3>
+        <h3><a th:href="@{/myBooksPage}">My Books</a></h3>
         <h3><a th:href="@{/changePasswordPage}">Change Password</a></h3>
         <h3><a th:href="@{/deleteAccountPage}">Delete Account</a></h3>
     </div>
