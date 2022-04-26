@@ -25,6 +25,6 @@ public class DeleteController {
     
     @GetMapping("/deleteAccountCancelRequest")
     public String cancelDeleteAccountRequest() {
-        return "/home";
+        return "redirect:/home";
     }
 }

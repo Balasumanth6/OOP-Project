@@ -2,8 +2,6 @@ package com.example.helloworld.controller;
 
 import com.example.helloworld.model.Book;
 import com.example.helloworld.model.CustomUserDetails;
-import com.example.helloworld.repository.BookRepository;
-import com.example.helloworld.repository.UserRepository;
 import com.example.helloworld.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,12 +13,6 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-    
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private BookRepository bookRepository;
     
     @Autowired
     private BookService bookService;

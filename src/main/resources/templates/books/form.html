@@ -13,12 +13,17 @@
 </head>
 
 <body class="bg-light vsc-initialized" data-new-gr-c-s-check-loaded="14.1057.0" data-gr-ext-installed="">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/home}"">Book Exchange Portal</a>
+        </div>
+    </nav>
     <div class="container text-center">
         <br>
         <br>
         <h2>Add a Book</h2>
         <p class="lead">Fill in the form to contribute to our collection. All fields are required.</p>
-<br>
+        <br>
         <form th:action="@{/books/book_register}" th:object="${book}" method="post" style="max-width: 600px; margin: 0 auto;">
             <div class="row g-3">
                 <div class="form-group row">
@@ -35,14 +40,12 @@
                 <br>
                 <div>
                     <button type="submit" class="btn btn-primary">Add Book</button>
-                    <button type="submit" class="btn btn-primary" form="form2">  Cancel  </button>
+                    <button type="submit" class="btn btn-default" form="form2">Cancel</button>
                 </div>
             </div>
         </form>
         <br>
-        <form>
-            <form id="form2" th:action="@{/home}"}>
-        </form>
+        <form id="form2" th:action="@{/home}"></form>
     </div>
 </body>
 </html>

@@ -23,15 +23,20 @@ public class AdminController {
         return "/admin/users";
     }
     
-    @GetMapping("/generateReport")
-    public String generateReport(Model model) {
+    @GetMapping("/generateReportPage")
+    public String generateReportPage(Model model) {
         List<User> listusers = userRepository.findAll();
         model.addAttribute("listUsers", listusers);
         return "/admin/generateReport";
     }
     
+    @GetMapping("/generateReport/{id}")
+    public String generateReport(@PathVariable(name = "id") Long id) {
+        return "/admin/home";
+    }
+    
     @GetMapping("/deleteUser/{id}")
-    public String deleteUser(@PathVariable(name = "id") Long id, Model model) {
+    public String deleteUser(@PathVariable(name = "id") Long id) {
         userRepository.deleteById(id);
         return "/admin/home";
     }

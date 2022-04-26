@@ -59,14 +59,13 @@
         <br>
 
         <form th:action="@{/deleteAccount}">
-            <div><button type="submit" class="btn btn-outline-primary">Delete</button>
-                <button type="submit" class="btn btn-outline-primary" form="form2">  Cancel  </button>
+            <div>
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <button type="submit" class="btn btn-outline-success" form="form2">Cancel</button>
             </div>
         </form>
 <br>
-        <form>
-            <form id="form2" th:action="@{/deleteAccountCancelRequest}"}>
-        </form>
+        <form id="form2" th:action="@{/home}"}></form>
     </div>
 </main>
 <br>

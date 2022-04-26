@@ -3,20 +3,13 @@ package com.example.helloworld.controller;
 import com.example.helloworld.common.Constants;
 import com.example.helloworld.model.*;
 import com.example.helloworld.repository.BookRepository;
-import com.example.helloworld.repository.UserRepository;
-import com.example.helloworld.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -24,13 +17,7 @@ import java.util.Objects;
 public class BooksController {
     
     @Autowired
-    private BookService bookService;
-    
-    @Autowired
     private BookRepository bookRepository;
-    
-    @Autowired
-    private UserRepository userRepository;
     
     @GetMapping("/firstPage")
     public String firstPage() {
@@ -55,7 +42,7 @@ public class BooksController {
     }
     
     @GetMapping("/deleteBook/{id}")
-    public String deleteBook(@PathVariable(name = "id") Long id, Model model) {
+    public String deleteBook(@PathVariable(name = "id") Long id) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String role = ((CustomUserDetails)principal).getRole();
         Long userId = ((CustomUserDetails)principal).getId();
@@ -88,32 +75,32 @@ public class BooksController {
         bookForRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_TRUE);
         bookForRequest.setRequestedNumberOfDays(numberOfDays.getNumberOfDaysRequired());
         bookRepository.save(bookForRequest);
-        return "/home";
+        return "redirect:/home";
     }
     
     @GetMapping("/cancelBorrowRequest")
     public String cancelBorrowRequest() {
-        return "/home";
+        return "redirect:/home";
     }
     
     @PostMapping("/cancelRequest/{id}")
-    public String cancelRequest(@PathVariable(name = "id") Long id, Model model) {
+    public String cancelRequest(@PathVariable(name = "id") Long id) {
         Book bookToCancelRequest = bookRepository.getById(id);
         bookToCancelRequest.setRequestedByUserId(null);
         bookToCancelRequest.setRequestedByUserName(null);
         bookToCancelRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
         bookRepository.save(bookToCancelRequest);
-        return "/home";
+        return "redirect:/home";
     }
     
     @PostMapping("/declineBorrowRequest/{id}")
-    public String declineBorrowRequest(@PathVariable(name = "id") Long id, Model model) {
+    public String declineBorrowRequest(@PathVariable(name = "id") Long id) {
         Book bookToDeclineBorrowRequest = bookRepository.getById(id);
         bookToDeclineBorrowRequest.setRequestedByUserId(null);
         bookToDeclineBorrowRequest.setRequestedByUserName(null);
         bookToDeclineBorrowRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
         bookRepository.save(bookToDeclineBorrowRequest);
-        return "/home";
+        return "redirect:/home";
     }
     
     @GetMapping("/acceptBorrowRequestPage/{id}")
@@ -143,7 +130,7 @@ public class BooksController {
         bookToAcceptRequest.setIssuedDate(timeAndPlace.getDateOfCollection());
         bookToAcceptRequest.setPlaceOfCollection(timeAndPlace.getPlaceOfCollection());
         bookRepository.save(bookToAcceptRequest);
-        return "/home";
+        return "redirect:/home";
     }
     
     @PostMapping("/returnBook/{id}")
@@ -157,7 +144,7 @@ public class BooksController {
         bookToBeReturned.setExtensionRequest(false);
         bookToBeReturned.setUsedLoanRequest(false);
         bookRepository.save(bookToBeReturned);
-        return "/home";
+        return "redirect:/home";
     }
 
     @PostMapping("extendLoanRequest/{id}")
@@ -165,7 +152,7 @@ public class BooksController {
         Book book = bookRepository.getById(id);
         book.setExtensionRequest(true);
         bookRepository.save(book);
-        return "/home";
+        return "redirect:/home";
     }
     
     @PostMapping("/acceptLoanRequest/{id}")
@@ -175,7 +162,7 @@ public class BooksController {
         book.setLoanAccepted(true);
         book.setUsedLoanRequest(true);
         bookRepository.save(book);
-        return "/home";
+        return "redirect:/home";
     }
     
     @PostMapping("/declineLoanRequest/{id}")
@@ -183,6 +170,6 @@ public class BooksController {
         Book book = bookRepository.getById(id);
         book.setExtensionRequest(false);
         bookRepository.save(book);
-        return "/home";
+        return "redirect:/home";
     }
 }

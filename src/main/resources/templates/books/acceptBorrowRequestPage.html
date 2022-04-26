@@ -34,8 +34,8 @@
             </div>
             <br>
             <div>
-                <button type="submit" class="btn btn-primary">Accept</button>
-                <button type="submit" class="btn btn-primary" form="form2">Decline</button>
+                <button type="submit" class="btn btn-success">Accept</button>
+                <button type="submit" class="btn btn-outline-danger" form="form2">Decline</button>
             </div>
         </form>
         <form id="form2" th:action="@{'/books/declineBorrowRequest/' + ${bookId}}">
