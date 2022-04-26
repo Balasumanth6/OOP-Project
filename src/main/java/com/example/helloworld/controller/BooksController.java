@@ -1,10 +1,7 @@
 package com.example.helloworld.controller;
 
 import com.example.helloworld.common.Constants;
-import com.example.helloworld.model.Book;
-import com.example.helloworld.model.CustomUserDetails;
-import com.example.helloworld.model.TimeAndPlace;
-import com.example.helloworld.model.User;
+import com.example.helloworld.model.*;
 import com.example.helloworld.repository.BookRepository;
 import com.example.helloworld.repository.UserRepository;
 import com.example.helloworld.service.BookService;
@@ -53,7 +50,6 @@ public class BooksController {
         book.setLoanAccepted(false);
         book.setExtensionRequest(false);
         book.setUsedLoanRequest(false);
-        book.setRequestedNumberOfDays(1L);
         bookRepository.save(book);
         return "/books/addSuccessful";
     }
@@ -74,13 +70,15 @@ public class BooksController {
         }
     }
     
-    @GetMapping("/books/borrowRequestPage/{id}")
-    public String borrowRequestPage(@PathVariable(name = "id") Long id){
+    @GetMapping("/borrowRequestPage/{id}")
+    public String borrowRequestPage(@PathVariable(name = "id") Long id, Model model){
+        model.addAttribute("numberOfDays", new NumberOfDays());
+        model.addAttribute("bookId", id);
         return "/books/borrowRequestPage";
     }
     
     @PostMapping("/borrowRequest/{id}")
-    public String borrowBook(@PathVariable(name = "id") Long id, Model model) {
+    public String borrowBook(@PathVariable(name = "id") Long id, NumberOfDays numberOfDays) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long currentUserId = ((CustomUserDetails)principal).getId();
         String currentUserName = ((CustomUserDetails)principal).getFullName();
@@ -88,7 +86,13 @@ public class BooksController {
         bookForRequest.setRequestedByUserId(currentUserId);
         bookForRequest.setRequestedByUserName(currentUserName);
         bookForRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_TRUE);
+        bookForRequest.setRequestedNumberOfDays(numberOfDays.getNumberOfDaysRequired());
         bookRepository.save(bookForRequest);
+        return "/home";
+    }
+    
+    @GetMapping("/cancelBorrowRequest")
+    public String cancelBorrowRequest() {
         return "/home";
     }
     
@@ -135,7 +139,7 @@ public class BooksController {
         bookToAcceptRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
         bookToAcceptRequest.setAvailableStatus(Constants.BOOK_STATUS_ISSUED);
         bookToAcceptRequest.setDateOfCollection(timeAndPlace.getDateOfCollection());
-        bookToAcceptRequest.setDueDate(new Date(timeAndPlace.getDateOfCollection().getTime() + 14*24*60*60*1000));
+        bookToAcceptRequest.setDueDate(new Date(timeAndPlace.getDateOfCollection().getTime() + (bookToAcceptRequest.getRequestedNumberOfDays())*24*60*60*1000));
         bookToAcceptRequest.setIssuedDate(timeAndPlace.getDateOfCollection());
         bookToAcceptRequest.setPlaceOfCollection(timeAndPlace.getPlaceOfCollection());
         bookRepository.save(bookToAcceptRequest);

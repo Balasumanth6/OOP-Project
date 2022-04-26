@@ -7,7 +7,7 @@
 <body>
     <div class="container text-center">
         <h1>For how many days you want the book?</h1>
-        <form th:action="@{'/borrowRequest/' + ${bookId}}" method="post" th:object="${numberOfDays}">
+        <form th:action="@{'/books/borrowRequest/' + ${bookId}}" method="post" th:object="${numberOfDays}">
             <div class="form-group row">
                 <div class="col-8"><input type="number" min="1" max="15" th:field="*{numberOfDaysRequired}" class="form-control" required/></div>
             </div>
