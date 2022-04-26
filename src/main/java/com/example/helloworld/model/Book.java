@@ -1,7 +1,11 @@
 package com.example.helloworld.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "books")
@@ -41,6 +45,107 @@ public class Book implements Serializable {
     @Column(nullable = true, name = "requestedByUserName")
     private String requestedByUserName;
 
+    @Column(nullable = false, name = "createdDate")
+    private Date createdDate;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = true, name = "dueDate")
+    private Date dueDate;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = true, name = "issuedDate")
+    private Date issuedDate;
+    
+    @Column(nullable = false, name = "extensionRequest")
+    private boolean extensionRequest;
+    
+    @Column(nullable = false, name = "LoanAccepted")
+    private boolean loanAccepted;
+    
+    @Column(nullable = false, name = "usedLoanRequest")
+    private boolean usedLoanRequest;
+    
+    @Column(nullable = true, name = "requestedNumberOfDays")
+    private Long requestedNumberOfDays;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = true, name = "dateOfCollection")
+    private Date dateOfCollection;
+    
+    @Column(nullable = true, name = "placeOfCollection")
+    private String placeOfCollection;
+
+    public Date getDateOfCollection() {
+        return dateOfCollection;
+    }
+
+    public void setDateOfCollection(Date dateOfCollection) {
+        this.dateOfCollection = dateOfCollection;
+    }
+
+    public String getPlaceOfCollection() {
+        return placeOfCollection;
+    }
+
+    public void setPlaceOfCollection(String placeOfCollection) {
+        this.placeOfCollection = placeOfCollection;
+    }
+
+    public Long getRequestedNumberOfDays() {
+        return requestedNumberOfDays;
+    }
+
+    public void setRequestedNumberOfDays(Long requestedNumberOfDays) {
+        this.requestedNumberOfDays = requestedNumberOfDays;
+    }
+
+    public boolean isUsedLoanRequest() {
+        return usedLoanRequest;
+    }
+
+    public void setUsedLoanRequest(boolean usedLoanRequest) {
+        this.usedLoanRequest = usedLoanRequest;
+    }
+
+    public boolean isLoanAccepted() {
+        return loanAccepted;
+    }
+
+    public void setLoanAccepted(boolean loanAccepted) {
+        this.loanAccepted = loanAccepted;
+    }
+
+    public boolean isExtensionRequest() {
+        return extensionRequest;
+    }
+
+    public void setExtensionRequest(boolean extensionRequest) {
+        this.extensionRequest = extensionRequest;
+    }
+
+    public Date getIssuedDate() {
+        return issuedDate;
+    }
+
+    public void setIssuedDate(Date issuedDate) {
+        this.issuedDate = issuedDate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+    
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
 
     public boolean isAvailableStatus() {
         return availableStatus;

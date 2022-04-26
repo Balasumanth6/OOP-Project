@@ -29,7 +29,25 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
             user.setEmail("admin@gmail.com");
             user.setPassword(passwordEncoder.encode("admin123"));
             user.setRole(Constants.ROLE_ADMIN);
+            user.setAddress("Bits Hyderabad");
+            user.setPhoneNumber("9381578257");
             userRepository.save(user);
+        }
+        else {
+            System.out.println("Admin user already present");
+        }
+        
+        User user2 = userRepository.findByEmail("bala@gmail.com");
+        if(user2 == null) {
+            user2 = new User();
+            user2.setFirstName("Sumanth");
+            user2.setLastName("B");
+            user2.setEmail("bala@gmail.com");
+            user2.setPassword(passwordEncoder.encode("sumanth6"));
+            user2.setRole(Constants.MEMBER_STUDENT);
+            user2.setAddress("119");
+            user2.setPhoneNumber("93");
+            userRepository.save(user2);
         }
         else {
             System.out.println("Admin user already present");

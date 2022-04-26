@@ -3,6 +3,7 @@ package com.example.helloworld.controller;
 import com.example.helloworld.common.Constants;
 import com.example.helloworld.model.Book;
 import com.example.helloworld.model.CustomUserDetails;
+import com.example.helloworld.model.TimeAndPlace;
 import com.example.helloworld.model.User;
 import com.example.helloworld.repository.BookRepository;
 import com.example.helloworld.repository.UserRepository;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,11 +35,11 @@ public class BooksController {
     @Autowired
     private UserRepository userRepository;
     
-    @GetMapping("/addBook")
-    public String showBookForm(Model model) {
-        model.addAttribute("book", new Book());
-        return "/books/form";
+    @GetMapping("/firstPage")
+    public String firstPage() {
+        return "/";
     }
+    
     @PostMapping("/book_register")
     public String bookRegister(Book book) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -46,18 +49,13 @@ public class BooksController {
         book.setUserName(userName);
         book.setAvailableStatus(Constants.BOOK_STATUS_AVAILABLE);
         book.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
+        book.setCreatedDate(new Date());
+        book.setLoanAccepted(false);
+        book.setExtensionRequest(false);
+        book.setUsedLoanRequest(false);
+        book.setRequestedNumberOfDays(1L);
         bookRepository.save(book);
         return "/books/addSuccessful";
-    }
-    
-    @GetMapping("/listBooks")
-    public String showBooksPage(Model model) {
-        List<Book> AllBooks = bookService.getAll();
-        model.addAttribute("AllBooks", AllBooks);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long currentUserId = ((CustomUserDetails)principal).getId();
-        model.addAttribute("currentUserId", currentUserId);
-        return "/books/listBooks";
     }
     
     @GetMapping("/deleteBook/{id}")
@@ -91,7 +89,6 @@ public class BooksController {
     
     @PostMapping("/cancelRequest/{id}")
     public String cancelRequest(@PathVariable(name = "id") Long id, Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Book bookToCancelRequest = bookRepository.getById(id);
         bookToCancelRequest.setRequestedByUserId(null);
         bookToCancelRequest.setRequestedByUserName(null);
@@ -110,8 +107,21 @@ public class BooksController {
         return "/home";
     }
     
+    @GetMapping("/acceptBorrowRequestPage/{id}")
+    public String acceptBorrowRequestPage(@PathVariable(value = "id") Long id, Model model){
+        Book book = bookRepository.getById(id);
+        String requestedByUserName = book.getRequestedByUserName();
+        Long requestedNumberOfDays = book.getRequestedNumberOfDays();
+        TimeAndPlace timeAndPlace = new TimeAndPlace();
+        model.addAttribute("timeAndPlace", timeAndPlace);
+        model.addAttribute("requestedByUserName", requestedByUserName);
+        model.addAttribute("requestedNumberOfDays", requestedNumberOfDays);
+        model.addAttribute("bookId", id);
+        return "/books/acceptBorrowRequestPage";
+    }
+    
     @PostMapping("/acceptBorrowRequest/{id}")
-    public String acceptBorrowRequest(@PathVariable(name = "id") Long id) {
+    public String acceptBorrowRequest(@PathVariable(name = "id") Long id, TimeAndPlace timeAndPlace) {
         Book bookToAcceptRequest = bookRepository.getById(id);
         bookToAcceptRequest.setIssuedToUserId(bookToAcceptRequest.getRequestedByUserId());
         bookToAcceptRequest.setIssuedToUserName(bookToAcceptRequest.getRequestedByUserName());
@@ -119,6 +129,10 @@ public class BooksController {
         bookToAcceptRequest.setRequestedByUserName(null);
         bookToAcceptRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
         bookToAcceptRequest.setAvailableStatus(Constants.BOOK_STATUS_ISSUED);
+        bookToAcceptRequest.setDateOfCollection(timeAndPlace.getDateOfCollection());
+        bookToAcceptRequest.setDueDate(new Date(timeAndPlace.getDateOfCollection().getTime() + 14*24*60*60*1000));
+        bookToAcceptRequest.setIssuedDate(timeAndPlace.getDateOfCollection());
+        bookToAcceptRequest.setPlaceOfCollection(timeAndPlace.getPlaceOfCollection());
         bookRepository.save(bookToAcceptRequest);
         return "/home";
     }
@@ -129,7 +143,37 @@ public class BooksController {
         bookToBeReturned.setIssuedToUserId(null);
         bookToBeReturned.setIssuedToUserName(null);
         bookToBeReturned.setAvailableStatus(Constants.BOOK_STATUS_AVAILABLE);
+        bookToBeReturned.setDueDate(null);
+        bookToBeReturned.setIssuedDate(null);
+        bookToBeReturned.setExtensionRequest(false);
+        bookToBeReturned.setUsedLoanRequest(false);
         bookRepository.save(bookToBeReturned);
+        return "/home";
+    }
+
+    @PostMapping("extendLoanRequest/{id}")
+    public String extendLoad(@PathVariable(name = "id") Long id) {
+        Book book = bookRepository.getById(id);
+        book.setExtensionRequest(true);
+        bookRepository.save(book);
+        return "/home";
+    }
+    
+    @PostMapping("/acceptLoanRequest/{id}")
+    public String acceptLoanRequest(@PathVariable(name = "id") Long id) {
+        Book book = bookRepository.getById(id);
+        book.setDueDate(new Date(book.getDueDate().getTime()+15*24*60*60*1000));
+        book.setLoanAccepted(true);
+        book.setUsedLoanRequest(true);
+        bookRepository.save(book);
+        return "/home";
+    }
+    
+    @PostMapping("/declineLoanRequest/{id}")
+    public String declineLoanRequest(@PathVariable(name = "id") Long id) {
+        Book book = bookRepository.getById(id);
+        book.setExtensionRequest(false);
+        bookRepository.save(book);
         return "/home";
     }
 }

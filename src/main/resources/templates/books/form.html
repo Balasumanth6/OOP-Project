@@ -20,8 +20,10 @@
                 <div>
                     <button type="submit" class="btn btn-primary">Add Book</button>
                 </div>
-                <div><button class="btn btn-primary"><a th:href="@{/home}">Back</a></button></div>
             </div>
+        </form>
+        <form th:action="@{/home}">
+            <div><button type="submit" class="btn btn-primary">Cancel</button></div>
         </form>
     </div>
 </body>

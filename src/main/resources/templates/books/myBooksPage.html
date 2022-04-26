@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Books</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container text-center">
+        <div><h3>My Books</h3></div>
+        <table class="table table-striped table-bordered">
+            <thead class="thread-dark">
+                <tr>
+                    <th>Book ID</th>
+                    <th>Book Name</th>
+                    <th>Book Author</th>
+                    <th>Status</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="book: ${AllBooks}" th:if="${book.userId} == ${currentUserId}">
+                    <td th:text="${book.id}">Book ID</td>
+                    <td th:text="${book.title}">Book Name</td>
+                    <td th:text="${book.author}">Book Author</td>
+                    <!--Accept and Decline-->
+                    <td th:if="${book.pendingStatus}">
+                        <body th:text="'Requested By: ' + ${book.requestedByUserName}"></body>
+                        <form th:action="@{'/books/acceptBorrowRequest/' + ${book.id}}" method="post">
+                            <input type="submit" value="Accept" />
+                            <input type="submit" value="Decline" form="thirdForm"/>
+                        </form>
+                        <form id="thirdForm" th:action="@{'/books/declineBorrowRequest/' + ${book.id}}" method="post">
+                        </form>
+                    </td>
+                    <!--Delete Book-->
+                    <td th:if="${book.availableStatus} and ${!book.pendingStatus}"></td>
+                    <td th:if="${book.availableStatus}">
+                        <form th:action="@{'/books/deleteBook/' + ${book.id}}">
+                            <input type="submit" value="Delete Book" />
+                        </form>
+                    </td>
+                    <!--Loan Extension Req, Accept and Decline-->
+                    <td th:if="${!book.availableStatus} and ${book.extensionRequest} and ${!book.loanAccepted}">
+                        <body th:text="'Loan Extension Request by: ' + ${book.issuedToUserName}"></body>
+                        <br>
+                        <body th:text="'Present Return Date: ' + ${#dates.format(book.dueDate, 'dd-MMM-yyyy')}"></body>
+                        <form th:action="@{'/books/acceptLoanRequest/' + ${book.id}}" method="post">
+                            <input type="submit" value="Accept" />
+                            <input type="submit" value="Decline" form="fourthForm"/>
+                        </form>
+                        <form id="fourthForm" th:action="@{'/books/declineLoanRequest/' + ${book.id}}" method="post">
+                        </form>
+                    </td>
+                    <!--Borrowed By-->
+                    <td th:if="${!book.availableStatus} and (${!book.extensionRequest} or ${book.usedLoanRequest})">
+                        <body th:text="'Borrowed By: ' + ${book.issuedToUserName}"></body>
+                        <br>
+                        <body th:text="'Return Date: ' + ${#dates.format(book.dueDate, 'dd-MMM-yyyy')}"></body>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div><a th:href="@{/home}">Back</a></div>
+    </div>
+</body>
+</html>
