@@ -42,7 +42,7 @@
                         <!--Accept and Decline-->
                         <td th:if="${book.pendingStatus} and (${book.userId} == ${currentUserId})">
                             <body th:text="'Requested By: ' + ${book.requestedByUserName}"></body>
-                            <form th:action="@{'/books/acceptBorrowRequest/' + ${book.id}}" method="post">
+                            <form th:action="@{'/books/acceptBorrowRequestPage/' + ${book.id}}">
                                 <input type="submit" value="Accept" />
                                 <input type="submit" value="Decline" form="thirdForm"/>
                             </form>

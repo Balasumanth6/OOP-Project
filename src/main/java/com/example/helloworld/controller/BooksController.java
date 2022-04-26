@@ -3,6 +3,7 @@ package com.example.helloworld.controller;
 import com.example.helloworld.common.Constants;
 import com.example.helloworld.model.Book;
 import com.example.helloworld.model.CustomUserDetails;
+import com.example.helloworld.model.TimeAndPlace;
 import com.example.helloworld.model.User;
 import com.example.helloworld.repository.BookRepository;
 import com.example.helloworld.repository.UserRepository;
@@ -52,6 +53,7 @@ public class BooksController {
         book.setLoanAccepted(false);
         book.setExtensionRequest(false);
         book.setUsedLoanRequest(false);
+        book.setRequestedNumberOfDays(1L);
         bookRepository.save(book);
         return "/books/addSuccessful";
     }
@@ -105,8 +107,21 @@ public class BooksController {
         return "/home";
     }
     
+    @GetMapping("/acceptBorrowRequestPage/{id}")
+    public String acceptBorrowRequestPage(@PathVariable(value = "id") Long id, Model model){
+        Book book = bookRepository.getById(id);
+        String requestedByUserName = book.getRequestedByUserName();
+        Long requestedNumberOfDays = book.getRequestedNumberOfDays();
+        TimeAndPlace timeAndPlace = new TimeAndPlace();
+        model.addAttribute("timeAndPlace", timeAndPlace);
+        model.addAttribute("requestedByUserName", requestedByUserName);
+        model.addAttribute("requestedNumberOfDays", requestedNumberOfDays);
+        model.addAttribute("bookId", id);
+        return "/books/acceptBorrowRequestPage";
+    }
+    
     @PostMapping("/acceptBorrowRequest/{id}")
-    public String acceptBorrowRequest(@PathVariable(name = "id") Long id) {
+    public String acceptBorrowRequest(@PathVariable(name = "id") Long id, TimeAndPlace timeAndPlace) {
         Book bookToAcceptRequest = bookRepository.getById(id);
         bookToAcceptRequest.setIssuedToUserId(bookToAcceptRequest.getRequestedByUserId());
         bookToAcceptRequest.setIssuedToUserName(bookToAcceptRequest.getRequestedByUserName());
@@ -114,8 +129,10 @@ public class BooksController {
         bookToAcceptRequest.setRequestedByUserName(null);
         bookToAcceptRequest.setPendingStatus(Constants.BOOK_STATUS_PENDING_FALSE);
         bookToAcceptRequest.setAvailableStatus(Constants.BOOK_STATUS_ISSUED);
-        bookToAcceptRequest.setDueDate(new Date(new Date().getTime() + 14*24*60*60*1000));
-        bookToAcceptRequest.setIssuedDate(new Date());
+        bookToAcceptRequest.setDateOfCollection(timeAndPlace.getDateOfCollection());
+        bookToAcceptRequest.setDueDate(new Date(timeAndPlace.getDateOfCollection().getTime() + 14*24*60*60*1000));
+        bookToAcceptRequest.setIssuedDate(timeAndPlace.getDateOfCollection());
+        bookToAcceptRequest.setPlaceOfCollection(timeAndPlace.getPlaceOfCollection());
         bookRepository.save(bookToAcceptRequest);
         return "/home";
     }

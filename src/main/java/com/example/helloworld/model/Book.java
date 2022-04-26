@@ -1,5 +1,7 @@
 package com.example.helloworld.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -46,9 +48,11 @@ public class Book implements Serializable {
     @Column(nullable = false, name = "createdDate")
     private Date createdDate;
     
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = true, name = "dueDate")
     private Date dueDate;
     
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = true, name = "issuedDate")
     private Date issuedDate;
     
@@ -60,6 +64,40 @@ public class Book implements Serializable {
     
     @Column(nullable = false, name = "usedLoanRequest")
     private boolean usedLoanRequest;
+    
+    @Column(nullable = true, name = "requestedNumberOfDays")
+    private Long requestedNumberOfDays;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = true, name = "dateOfCollection")
+    private Date dateOfCollection;
+    
+    @Column(nullable = true, name = "placeOfCollection")
+    private String placeOfCollection;
+
+    public Date getDateOfCollection() {
+        return dateOfCollection;
+    }
+
+    public void setDateOfCollection(Date dateOfCollection) {
+        this.dateOfCollection = dateOfCollection;
+    }
+
+    public String getPlaceOfCollection() {
+        return placeOfCollection;
+    }
+
+    public void setPlaceOfCollection(String placeOfCollection) {
+        this.placeOfCollection = placeOfCollection;
+    }
+
+    public Long getRequestedNumberOfDays() {
+        return requestedNumberOfDays;
+    }
+
+    public void setRequestedNumberOfDays(Long requestedNumberOfDays) {
+        this.requestedNumberOfDays = requestedNumberOfDays;
+    }
 
     public boolean isUsedLoanRequest() {
         return usedLoanRequest;
