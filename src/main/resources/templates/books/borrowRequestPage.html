@@ -12,11 +12,13 @@
 </head>
 <body class="bg-light vsc-initialized" data-new-gr-c-s-check-loaded="14.1057.0" data-gr-ext-installed="">
     <div class="container text-center">
+        <br>
         <h1>Borrow Request Form</h1>
-        <form th:action="@{'/books/borrowRequest/' + ${bookId}}" method="post" th:object="${numberOfDays}">
-            <div class="g-3">
+        <br>
+        <form th:action="@{'/books/borrowRequest/' + ${bookId}}" method="post" th:object="${numberOfDays}" style="max-width: 600px; margin: 0 auto;">
+            <div class="row g-3">
                 <div class="form-group row">
-                    <label class="col-4 col-form-label">For how many days you want the book? </label>
+                    <label class="col-4 col-form-label">Book to be lent by days: </label>
                     <div class="col-8"><input type="number" min="1" max="15" th:field="*{numberOfDaysRequired}" class="form-control" required/></div>
                 </div>
             </div>

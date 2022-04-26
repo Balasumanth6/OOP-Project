@@ -15,22 +15,22 @@
     <div class="container text-center">
         <br>
         <br>
-        <h3>Do you want to Accept Borrow Request From <body th:text="${requestedByUserName}"></body> </h3>
+        <h3>Borrow Request made from <body th:text="${requestedByUserName}"></body> </h3>
         <br>
-        <h3>Requested Number Of Days is <body th:text="${requestedNumberOfDays}"></body> </h3>
-        <p class="lead">Fill in the form to accept borrow request. All fields are required.</p>
-
-        <form th:action="@{'/books/acceptBorrowRequest/' + ${bookId}}" th:object="${timeAndPlace}" method="post">
-            <div class="m-3">
+        <h3>Request is for <body th:text="${requestedNumberOfDays}"></body> days </h3><br>
+        <p class="lead">Kindly fill in the date and place of collection</p>
+<br>
+        <form th:action="@{'/books/acceptBorrowRequest/' + ${bookId}}" th:object="${timeAndPlace}" method="post" style="max-width: 600px; margin: 0 auto;">
+            <div class="row g-3">
                 <div class="form-group row">
                     <label class="col-4 col-form-label">Date of collection: </label>
-                    <div class="col-8"><input type="date" th:field="*{dateOfCollection}" class="form-control" required/></div>
+                    <div class="col-7"><input type="date" th:field="*{dateOfCollection}" class="form-control" required/></div>
                 </div>
             </div>
             <br>
             <div class="form-group row">
                 <label class="col-4 col-form-label">Place of collection: </label>
-                <div class="col-8"><input type="text" th:field="*{placeOfCollection}" class="form-control" required/></div>
+                <div class="col-6"><input type="text" th:field="*{placeOfCollection}" class="form-control" required/></div>
             </div>
             <br>
             <div>
