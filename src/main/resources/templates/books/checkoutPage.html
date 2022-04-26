@@ -33,7 +33,8 @@
                     <td th:text="${book.author}">Book Author</td>
                     <td th:text="${book.userName}">Added By</td>
                     <td>
-                        <body th:text="'Due Date: ' + ${#dates.format(book.dueDate, 'dd-MMM-yyyy')}"></body>
+                        <div th:text="'Due Date: ' + ${#dates.format(book.dueDate, 'dd-MMM-yyyy')}"></div>
+                        <div th:text="'Place of collection: ' + ${book.placeOfCollection}"></div>
                         <form th:action="@{'/books/extendLoanRequest/' + ${book.id}}" th:if="${!book.extensionRequest}" method="post">
                             <input type="submit" value="Extend Loan" />
                             <input type="submit" value="Return Book" form="secondForm"/>

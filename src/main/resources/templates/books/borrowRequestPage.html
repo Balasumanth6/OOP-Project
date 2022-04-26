@@ -12,26 +12,15 @@
 </head>
 <body class="bg-light vsc-initialized" data-new-gr-c-s-check-loaded="14.1057.0" data-gr-ext-installed="">
     <div class="container text-center">
-<<<<<<< HEAD
-        <h1>For how many days you want the book?</h1>
+        <h1>Borrow Request Form</h1>
         <form th:action="@{'/books/borrowRequest/' + ${bookId}}" method="post" th:object="${numberOfDays}">
-            <div class="form-group row">
-                <div class="col-8"><input type="number" min="1" max="15" th:field="*{numberOfDaysRequired}" class="form-control" required/></div>
-            </div>
-=======
-        <br>
-        <br>
-        <h2>Borrow Request Extension</h2>
-        <br>
-        <br>
-        <form th:action="@{'/borrowRequest/' + ${bookId}}" method="post" th:object="${numberOfDays}">
             <div class="g-3">
                 <div class="form-group row">
                     <label class="col-4 col-form-label">For how many days you want the book? </label>
                     <div class="col-8"><input type="number" min="1" max="15" th:field="*{numberOfDaysRequired}" class="form-control" required/></div>
                 </div>
+            </div>
             <br>
->>>>>>> 5af3680d749e2d2fb2c0c21d9af47184fbea4335
             <div>
                 <button type="submit" class="btn btn-primary">  Borrow  </button>
                 <button type="submit" class="btn btn-primary" form="form2">  Cancel  </button>
