@@ -52,5 +52,36 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
         else {
             System.out.println("Admin user already present");
         }
+
+        User user3 = userRepository.findByEmail("swayam375@gmail.com");
+        if(user3 == null) {
+            user3 = new User();
+            user3.setFirstName("Swayam");
+            user3.setLastName("Bhargava");
+            user3.setEmail("swayam375@gmail.com");
+            user3.setPassword(passwordEncoder.encode("Swayam"));
+            user3.setRole(Constants.MEMBER_STUDENT);
+            user3.setAddress("1602");
+            user3.setPhoneNumber("7073892224");
+            userRepository.save(user3);
+        }
+        else {
+            System.out.println("Admin user already present");
+        }
+        User user4 = userRepository.findByEmail("Bhumika@gmail.com");
+        if(user4 == null) {
+            user4 = new User();
+            user4.setFirstName("Bhumika");
+            user4.setLastName("Srivastava");
+            user4.setEmail("Bhumika@gmail.com");
+            user4.setPassword(passwordEncoder.encode("Bhumika"));
+            user4.setRole(Constants.MEMBER_STUDENT);
+            user4.setAddress("1601");
+            user4.setPhoneNumber("85223344");
+            userRepository.save(user4);
+        }
+        else {
+            System.out.println("Admin user already present");
+        }
     }
 }
