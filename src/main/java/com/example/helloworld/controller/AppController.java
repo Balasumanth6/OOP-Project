@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -38,8 +39,8 @@ public class AppController {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setRole(Constants.MEMBER_STUDENT);
+        user.setCreatedDate(new Date());
         userRepository.save(user);
-
         return "loginAndSignUp/register_success";
     }
     

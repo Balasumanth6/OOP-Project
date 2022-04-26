@@ -1,6 +1,9 @@
 package com.example.helloworld.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -41,6 +44,18 @@ public class User {
     
     @Column(name = "address")
     private String address;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "createdDate")
+    private Date createdDate;
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;

@@ -23,6 +23,13 @@ public class AdminController {
         return "/admin/users";
     }
     
+    @GetMapping("/generateReport")
+    public String generateReport(Model model) {
+        List<User> listusers = userRepository.findAll();
+        model.addAttribute("listUsers", listusers);
+        return "/admin/generateReport";
+    }
+    
     @GetMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable(name = "id") Long id, Model model) {
         userRepository.deleteById(id);
