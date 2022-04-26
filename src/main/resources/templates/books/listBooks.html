@@ -30,7 +30,7 @@
                         <td th:text="${book.userName}">Added By</td>
                         <!--Borrow and Cancel-->
                         <td th:if="${!book.pendingStatus} and (${book.userId} != ${currentUserId}) and ${book.availableStatus}">
-                            <form th:action="@{'/books/borrowRequest/' + ${book.id}}" method="post">
+                            <form th:action="@{'/books/borrowRequestPage/' + ${book.id}}">
                                 <input type="submit" value="Borrow" />
                             </form>
                         </td>
