@@ -74,6 +74,11 @@ public class BooksController {
         }
     }
     
+    @GetMapping("/books/borrowRequestPage/{id}")
+    public String borrowRequestPage(@PathVariable(name = "id") Long id){
+        return "/books/borrowRequestPage";
+    }
+    
     @PostMapping("/borrowRequest/{id}")
     public String borrowBook(@PathVariable(name = "id") Long id, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

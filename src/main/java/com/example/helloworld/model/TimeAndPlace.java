@@ -2,6 +2,7 @@ package com.example.helloworld.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
 public class TimeAndPlace {
