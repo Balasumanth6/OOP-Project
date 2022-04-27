@@ -72,9 +72,10 @@
                         <!--DueDate, ExtendLoan and Return Book-->
                         <td th:if="${!book.availableStatus} and (${book.issuedToUserId} == ${currentUserId})">
                             <div th:text="'Due Date: ' + ${#dates.format(book.dueDate, 'dd-MMM-yyyy')}"></div>
+                            <div th:text="'Date of collection: ' + ${#dates.format(book.dateOfCollection, 'dd-MMM-yyyy')}"}></div>
                             <div th:text="'Place of collection: ' + ${book.placeOfCollection}"></div>
-                            <form th:action="@{'/books/extendLoanRequest/' + ${book.id}}" th:if="${!book.extensionRequest}" method="post">
-                                <input type="submit" value="Extend Loan" />
+                            <form th:action="@{'/books/extendLoanRequest/' + ${book.id}}" method="post">
+                                <input type="submit" value="Extend Loan" th:if="${!book.extensionRequest}"/>
                                 <input type="submit" value="Return Book" form="secondForm"/>
                             </form>
                             <form id="secondForm" th:action="@{'/books/returnBook/' + ${book.id}}" method="post">

@@ -47,8 +47,8 @@ public class AppController {
     @PostMapping("/changePassword")
     public String changePassword(@RequestParam(value = "oldPassword", required = true) String oldPassword, @RequestParam(value = "newPassword", required = true) String newPassword) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String oldEncodedPassword = passwordEncoder.encode(oldPassword);
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String oldEncodedPassword = ((CustomUserDetails)principal).getPassword();
         String email = ((CustomUserDetails)principal).getEmail();
         if (passwordEncoder.matches(oldPassword, oldEncodedPassword)) {
             User user = userRepository.findByEmail(email);
