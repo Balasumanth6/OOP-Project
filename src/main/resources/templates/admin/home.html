@@ -11,13 +11,83 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Book Exchange Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/home}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin}" th:if="${#request.userPrincipal.principal.role} == 'Admin'">Admin Privileges</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/addBook}">Add Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/listBooks}">List Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/checkoutPage}">Checked Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/myBooksPage}">My Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/changePasswordPage}">Change Password</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/deleteAccountPage}">Delete Account</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav nav navbar-right">
+                    <li class="nav-item">
+                        <div>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="btn btn-outline-danger">Sign Out</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img th:src="@{pictures/book4.jpg}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{pictures/book5.jpg}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{pictures/book6.jpg}"  class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
     <br>
     <h1><p class="text-center fs-3">Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b></p></h1>
-    <form th:action="@{/users}"><button type="submit" class="btn btn-link">List Users</button></form>
-    <form th:action="@{/generateReportPage}"><button type="submit" class="btn btn-link">Generate Report</button></form>
-    <form th:action="@{/home}"><button type="submit" class="btn">Back</button></form>
+    <div class="container text-center">
+        <form th:action="@{/users}"><button type="submit" class="btn btn-outline-primary">List Users</button></form>
+        <br>
+        <form th:action="@{/generateReportPage}"><button type="submit" class="btn btn-outline-primary">Generate Report</button></form>
+        <br>
+        <form th:action="@{/home}"><button type="submit" class="btn btn-primary">Back</button></form>
+    </div>
 </body>
 <script type='text/javascript'>
     window.onload = function() {
