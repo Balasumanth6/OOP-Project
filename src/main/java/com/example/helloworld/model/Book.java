@@ -21,6 +21,15 @@ public class Book implements Serializable {
     @Column(nullable = false, name = "author")
     private String author;
     
+    @Column(nullable = false, name = "publisher")
+    private String publisher;
+    
+    @Column(nullable = false, name = "yearOfPublishing")
+    private Long yearOfPublishing;
+    
+    @Column(nullable = false, name = "Edition")
+    private Long edition;
+    
     @Column(nullable = false, name = "issuedStatus")
     private boolean availableStatus;
     
@@ -74,6 +83,30 @@ public class Book implements Serializable {
     
     @Column(nullable = true, name = "placeOfCollection")
     private String placeOfCollection;
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public Long getYearOfPublishing() {
+        return yearOfPublishing;
+    }
+
+    public void setYearOfPublishing(Long yearOfPublishing) {
+        this.yearOfPublishing = yearOfPublishing;
+    }
+
+    public Long getEdition() {
+        return edition;
+    }
+
+    public void setEdition(Long edition) {
+        this.edition = edition;
+    }
 
     public Date getDateOfCollection() {
         return dateOfCollection;

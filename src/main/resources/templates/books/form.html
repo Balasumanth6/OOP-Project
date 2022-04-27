@@ -38,6 +38,24 @@
                 </div>
                 <br>
                 <br>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Publisher </label>
+                    <div class="col-8"><input type="text" th:field="*{publisher}" class="form-control" required/></div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Year Of Publishing </label>
+                    <div class="col-8"><input min="0" max="2022" type="number" th:field="*{yearOfPublishing}" class="form-control" required/></div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Edition </label>
+                    <div class="col-8"><input min="1" type="number" th:field="*{edition}" class="form-control" required/></div>
+                </div>
+                <br>
+                <br>
                 <div>
                     <button type="submit" class="btn btn-primary">Add Book</button>
                     <button type="submit" class="btn btn-default" form="form2">Cancel</button>
