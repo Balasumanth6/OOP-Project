@@ -44,18 +44,6 @@ public class AppController {
         return "loginAndSignUp/register_success";
     }
     
-    @GetMapping("/admin")
-    public String AdminView() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String role = ((CustomUserDetails)principal).getRole();
-        if (Objects.equals(role, Constants.ROLE_ADMIN)) {
-            return "/admin/home";
-        }
-        else {
-            return "accessDenied";
-        }
-    }
-    
     @PostMapping("/changePassword")
     public String changePassword(@RequestParam(value = "oldPassword", required = true) String oldPassword, @RequestParam(value = "newPassword", required = true) String newPassword) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

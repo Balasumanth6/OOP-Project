@@ -1,5 +1,6 @@
 package com.example.helloworld.controller;
 
+import com.example.helloworld.common.Constants;
 import com.example.helloworld.model.Book;
 import com.example.helloworld.model.CustomUserDetails;
 import com.example.helloworld.service.BookService;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class HomeController {
@@ -20,6 +22,18 @@ public class HomeController {
     @GetMapping(value = {"/home"})
     public String homePage() {
         return "/home";
+    }
+
+    @GetMapping("/admin")
+    public String AdminView() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String role = ((CustomUserDetails)principal).getRole();
+        if (Objects.equals(role, Constants.ROLE_ADMIN)) {
+            return "/admin/home";
+        }
+        else {
+            return "accessDenied";
+        }
     }
 
     @GetMapping("/addBook")

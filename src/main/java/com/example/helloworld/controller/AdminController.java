@@ -16,6 +16,11 @@ public class AdminController {
     @Autowired
     UserRepository userRepository;
     
+    @GetMapping("/adminHome")
+    public String adminHome() {
+        return "admin/home";
+    } 
+    
     @GetMapping("/users")
     public String ListUsers(Model model) {
         List<User> listUsers = userRepository.findAll();
@@ -25,19 +30,19 @@ public class AdminController {
     
     @GetMapping("/generateReportPage")
     public String generateReportPage(Model model) {
-        List<User> listusers = userRepository.findAll();
-        model.addAttribute("listUsers", listusers);
+        List<User> listUsers = userRepository.findAll();
+        model.addAttribute("listUsers", listUsers);
         return "/admin/generateReport";
     }
     
     @GetMapping("/generateReport/{id}")
     public String generateReport(@PathVariable(name = "id") Long id) {
-        return "/admin/home";
+        return "redirect:/adminHome";
     }
     
     @GetMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable(name = "id") Long id) {
         userRepository.deleteById(id);
-        return "/admin/home";
+        return "redirect:/adminHome";
     }
 }
