@@ -31,6 +31,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
             user.setRole(Constants.ROLE_ADMIN);
             user.setAddress("Bits Hyderabad");
             user.setPhoneNumber("9381578257");
+            user.setWallet(1000L);
             userRepository.save(user);
         }
         else {
@@ -47,6 +48,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
             user2.setRole(Constants.MEMBER_STUDENT);
             user2.setAddress("119");
             user2.setPhoneNumber("93");
+            user2.setWallet(1000L);
             userRepository.save(user2);
         }
         else {
@@ -63,6 +65,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
             user3.setRole(Constants.MEMBER_STUDENT);
             user3.setAddress("1602");
             user3.setPhoneNumber("7073892224");
+            user3.setWallet(1000L);
             userRepository.save(user3);
         }
         else {
@@ -78,6 +81,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
             user4.setRole(Constants.MEMBER_STUDENT);
             user4.setAddress("1601");
             user4.setPhoneNumber("85223344");
+            user4.setWallet(1000L);
             userRepository.save(user4);
         }
         else {
@@ -93,6 +97,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
             user5.setRole(Constants.MEMBER_STUDENT);
             user5.setAddress("1603");
             user5.setPhoneNumber("9848022338");
+            user5.setWallet(1000L);
             userRepository.save(user5);
         }
         else {

@@ -30,6 +30,9 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
     
+    @Column(name = "wallet", nullable = false)
+    private Long wallet;
+    
     @Column(nullable = false)
     private String password;
     
@@ -48,6 +51,14 @@ public class User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "createdDate")
     private Date createdDate;
+
+    public Long getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Long wallet) {
+        this.wallet = wallet;
+    }
 
     public Date getCreatedDate() {
         return createdDate;

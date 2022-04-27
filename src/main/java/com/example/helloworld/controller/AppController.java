@@ -40,6 +40,7 @@ public class AppController {
         user.setPassword(encodedPassword);
         user.setRole(Constants.MEMBER_STUDENT);
         user.setCreatedDate(new Date());
+        user.setWallet(1000L);
         userRepository.save(user);
         return "loginAndSignUp/register_success";
     }

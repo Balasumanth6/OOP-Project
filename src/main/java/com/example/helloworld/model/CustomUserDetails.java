@@ -11,6 +11,7 @@ public class CustomUserDetails implements UserDetails {
     
     public String getEmail() { return user.getEmail(); }
     
+    public Long getWalletStatus() { return user.getWallet(); }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { return  null; }
     

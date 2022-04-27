@@ -41,6 +41,14 @@ public class HomeController {
         model.addAttribute("book", new Book());
         return "/books/form";
     }
+    
+    @GetMapping("/walletStatusPage")
+    public String walletStatusPage(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long currentAmount = ((CustomUserDetails)principal).getWalletStatus();
+        model.addAttribute("currentAmount", currentAmount);
+        return "/walletStatusPage";
+    }
 
     @GetMapping("/listBooks")
     public String showBooksPage(Model model) {
