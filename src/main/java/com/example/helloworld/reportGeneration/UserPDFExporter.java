@@ -1,4 +1,4 @@
-package com.example.helloworld.reportGneration;
+package com.example.helloworld.reportGeneration;
 
 import com.example.helloworld.model.User;
 

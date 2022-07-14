@@ -1,7 +1,4 @@
-package com.example.helloworld.reportGneration;
-
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfPTable;
+package com.example.helloworld.reportGeneration;
 
 public class TableBuilder {
     
